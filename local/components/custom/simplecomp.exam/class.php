@@ -3,7 +3,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 class TestComponent extends CBitrixComponent
 {
-    public function newsIDsWithTheirSections()
+    public function sectionsSortedByNews()
     {
         $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"], "ACTIVE" => "Y");
         $arSelect = array("ID", "NAME", $this->arParams["USER_SECTION_PROP_CODE"]);
@@ -11,12 +11,12 @@ class TestComponent extends CBitrixComponent
 
         while ($section = $sections->Fetch()) {
             foreach ($section[$this->arParams["USER_SECTION_PROP_CODE"]] as $newsID) {
-                if (array_key_exists($newsID, $this->arResult["NEWS"])) {
-                    array_push($this->arResult["NEWS"][$newsID]["SECTION_IDS"], $section["ID"]);
-                    array_push($this->arResult["NEWS"][$newsID]["SECTION_NAMES"], $section["NAME"]);
+                if (array_key_exists($newsID, $this->arResult["SECTIONS"])) {
+                    array_push($this->arResult["SECTIONS"][$newsID]["SECTION_IDS"], $section["ID"]);
+                    array_push($this->arResult["SECTIONS"][$newsID]["SECTION_NAMES"], $section["NAME"]);
                 } else {
-                    $this->arResult["NEWS"][$newsID]["SECTION_IDS"] = array($section["ID"]);
-                    $this->arResult["NEWS"][$newsID]["SECTION_NAMES"] = array($section["NAME"]);
+                    $this->arResult["SECTIONS"][$newsID]["SECTION_IDS"] = array($section["ID"]);
+                    $this->arResult["SECTIONS"][$newsID]["SECTION_NAMES"] = array($section["NAME"]);
                 }
             }
         }
@@ -29,51 +29,37 @@ class TestComponent extends CBitrixComponent
         $elements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 
         while ($element = $elements->Fetch()) {
-            $this->arResult["ELEMENTS"][$element["ID"]] = $element;
+            foreach ($this->arResult["SECTIONS"] as $newsID => $sectionIDs) {
+                foreach ($sectionIDs["SECTION_IDS"] as $sectionID) {
+                    if ($sectionID == $element["IBLOCK_SECTION_ID"]) {
+                        $this->arResult["PRODUCTS"][$newsID][$element["NAME"]] = $element;
+                    }
+                }
+            }
         }
-
-        $this->arResult["COUNTER"] = $elements->SelectedRowsCount();;
+        $this->arResult["COUNTER"] = $elements->SelectedRowsCount();
         $this->SetResultCacheKeys(array("COUNTER"));
     }
 
-    public function productsGroupedByNews()
+    public function arrayOfNews()
     {
         $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_NEWS"], "ACTIVE" => "Y");
         $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
         $news = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 
-        while ($newsValues = $news->Fetch()) {
-
-            foreach ($this->arResult["NEWS"] as $newsID => $sectionsIDs) {
-
-                if ($newsValues["ID"] == $newsID) {
-
-                    $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"] = $newsValues;
-                    $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"]["SECTION_NAMES"] = $this->arResult["NEWS"][$newsID]["SECTION_NAMES"];
-
-                    foreach ($this->arResult["ELEMENTS"] as $ELEMENT) {
-
-                        foreach ($sectionsIDs["SECTION_IDS"] as $sectionsID) {
-
-                            if ($ELEMENT["IBLOCK_SECTION_ID"] == $sectionsID) {
-                                $this->arResult["RESULT"][$newsValues["NAME"]]["PRODUCTS"][$ELEMENT["NAME"]] = $ELEMENT;
-                            }
-                        }
-                    }
-                }
-            }
+        while ($newsValue = $news->Fetch()) {
+            $this->arResult["NEWS"][$newsValue["ID"]] = $newsValue;
         }
     }
 
     public function executeComponent()
     {
         if ($this->startResultCache()) {
+            $this->sectionsSortedByNews();
+            $this->arrayOfNews();
             $this->arrayOfElements();
-            $this->newsIDsWithTheirSections();
-            $this->productsGroupedByNews();
             $this->IncludeComponentTemplate();
         }
-
         global $APPLICATION;
         $APPLICATION->SetTitle("В каталоге товаров представлено товаров: " . $this->arResult['COUNTER']);
     }
