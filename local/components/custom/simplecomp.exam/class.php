@@ -22,46 +22,55 @@ class TestComponent extends CBitrixComponent
         }
     }
 
+    public function arrayOfElements()
+    {
+        $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"], "ACTIVE" => "Y");
+        $arSelect = array("ID", 'NAME', "IBLOCK_SECTION_ID", "PROPERTY_PRICE", "PROPERTY_MATERIAL", "PROPERTY_ARTNUMBER"); //
+        $elements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+
+        while ($element = $elements->Fetch()) {
+            $this->arResult["ELEMENTS"][$element["ID"]] = $element;
+        }
+
+        $this->arResult["COUNTER"] = $elements->SelectedRowsCount();;
+        $this->SetResultCacheKeys(array("COUNTER"));
+    }
+
     public function productsGroupedByNews()
     {
-        foreach ($this->arResult["NEWS"] as $newsID => $sectionsIDs) {
+        $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_NEWS"], "ACTIVE" => "Y");
+        $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
+        $news = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 
-            $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_NEWS"], "ID" => $newsID, "ACTIVE" => "Y");
-            $arSelect = array("NAME", "DATE_ACTIVE_FROM");
-            $singleNews = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+        while ($newsValues = $news->Fetch()) {
 
-            $newsValues = $singleNews->Fetch();
-            $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"] = $newsValues;
-            $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"]["SECTION_NAMES"] = $this->arResult["NEWS"][$newsID]["SECTION_NAMES"];
+            foreach ($this->arResult["NEWS"] as $newsID => $sectionsIDs) {
 
-            foreach ($sectionsIDs["SECTION_IDS"] as $sectionsID) {
+                if ($newsValues["ID"] == $newsID) {
 
-                $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"], "IBLOCK_SECTION_ID" => $sectionsID, "ACTIVE" => "Y");
-                $arSelect = array("ID", "IBLOCK_SECTION_ID", 'NAME', "PROPERTY_PRICE", "PROPERTY_MATERIAL", "PROPERTY_ARTNUMBER"); //
-                $elements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+                    $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"] = $newsValues;
+                    $this->arResult["RESULT"][$newsValues["NAME"]]["NEWS_VALUES"]["SECTION_NAMES"] = $this->arResult["NEWS"][$newsID]["SECTION_NAMES"];
 
-                while ($product = $elements->Fetch()) {
-                    $this->arResult["RESULT"][$newsValues["NAME"]]["PRODUCTS"][$product["NAME"]] = $product;
+                    foreach ($this->arResult["ELEMENTS"] as $ELEMENT) {
+
+                        foreach ($sectionsIDs["SECTION_IDS"] as $sectionsID) {
+
+                            if ($ELEMENT["IBLOCK_SECTION_ID"] == $sectionsID) {
+                                $this->arResult["RESULT"][$newsValues["NAME"]]["PRODUCTS"][$ELEMENT["NAME"]] = $ELEMENT;
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-    public function countElements()
-    {
-        $numberOfElements = CIBlockElement::GetList(array(), array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"]), array(), false, array());
-        $this->arResult["COUNTER"] = $numberOfElements;
-        $this->SetResultCacheKeys(array("COUNTER"));
-
-        return $numberOfElements;
-    }
-
     public function executeComponent()
     {
         if ($this->startResultCache()) {
+            $this->arrayOfElements();
             $this->newsIDsWithTheirSections();
             $this->productsGroupedByNews();
-            $this->countElements();
             $this->IncludeComponentTemplate();
         }
 
