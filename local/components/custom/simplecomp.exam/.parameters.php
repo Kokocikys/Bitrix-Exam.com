@@ -16,23 +16,25 @@ $arComponentParameters = array(
     "PARAMETERS" => array(
         "IBLOCK_ID_CATALOG" => array(
             "PARENT" => "BASE",
-            "NAME" => "Инфоблок каталога",
+            "NAME" => GetMessage("IBLOCK_CATALOG"),
             "TYPE" => "LIST",
             "VALUES" => $arIblock,
             "MULTIPLE" => "N",
         ),
         "IBLOCK_ID_NEWS" => array(
             "PARENT" => "BASE",
-            "NAME" => "Инфоблок новостей",
+            "NAME" => GetMessage("IBLOCK_NEWS"),
             "TYPE" => "LIST",
             "VALUES" => $arIblock,
             "MULTIPLE" => "N",
         ),
         "USER_SECTION_PROP_CODE" => array(
             "PARENT" => "BASE",
-            "NAME" => "Код свойства раздела каталога, хранящий привязку к новостям",
+            "NAME" => GetMessage("USER_SECTION_PROP_CODE"),
             "TYPE" => "STRING",
         ),
-        "CACHE_TIME" => array("DEFAULT" => 36000000),
+        "CACHE_TIME" => array(
+            "DEFAULT" => 36000000,
+        ),
     ),
 );

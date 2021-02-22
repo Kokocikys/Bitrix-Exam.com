@@ -50,16 +50,22 @@ class TestComponent extends CBitrixComponent
     public function countElements()
     {
         $numberOfElements = CIBlockElement::GetList(array(), array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"]), array(), false, array());
+        $this->arResult["COUNTER"] = $numberOfElements;
+        $this->SetResultCacheKeys(array("COUNTER"));
+
         return $numberOfElements;
     }
 
     public function executeComponent()
     {
-        $this->newsIDsWithTheirSections();
-        $this->productsGroupedByNews();
-        $this->IncludeComponentTemplate();
+        if ($this->startResultCache()) {
+            $this->newsIDsWithTheirSections();
+            $this->productsGroupedByNews();
+            $this->countElements();
+            $this->IncludeComponentTemplate();
+        }
 
         global $APPLICATION;
-        $APPLICATION->SetTitle("В каталоге товаров представлено товаров: " . $this->countElements());
+        $APPLICATION->SetTitle("В каталоге товаров представлено товаров: " . $this->arResult['COUNTER']);
     }
 }
