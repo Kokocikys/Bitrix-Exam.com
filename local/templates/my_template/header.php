@@ -137,6 +137,8 @@ IncludeTemplateLangFile(__FILE__);
                 </div>
             </div>
 
+            <? $APPLICATION->ShowViewContent('ex2-82'); ?>
+
             <div class="information-block">
                 <div class="top"></div>
                 <div class="information-block-inner">
