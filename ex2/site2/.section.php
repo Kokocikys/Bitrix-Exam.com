@@ -1,5 +1,5 @@
 <?
-$sSectionName = "Второй сайт";
+$sSectionName = "Furniture company";
 $arDirProperties = Array(
 
 );

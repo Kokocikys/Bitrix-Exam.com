@@ -126,6 +126,28 @@ IncludeTemplateLangFile(__FILE__);
 
             <div class="content-block">
                 <div class="content-block-inner">
+                    <h3><?= GetMessage('CFT_LANG_CHANGE') ?></h3>
+                    <?
+                    $APPLICATION->IncludeComponent(
+	"bitrix:main.site.selector", 
+	"modified_dropdown", 
+	array(
+		"COMPONENT_TEMPLATE" => "modified_dropdown",
+		"SITE_LIST" => array(
+			0 => "s1",
+			1 => "s2",
+		),
+		"CACHE_TYPE" => "A",
+		"CACHE_TIME" => "3600"
+	),
+	false
+);
+                    ?>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="content-block-inner">
 
                     <?
                     $APPLICATION->IncludeComponent("bitrix:search.form", "flat", array(
