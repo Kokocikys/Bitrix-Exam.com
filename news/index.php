@@ -9,7 +9,7 @@ $APPLICATION->SetTitle("Новости");
 		"IBLOCK_ID" => "1",
 		"NEWS_COUNT" => "5",
 		"USE_SEARCH" => "N",
-		"USE_RSS" => "Y",
+		"USE_RSS" => "N",
 		"NUM_NEWS" => "20",
 		"NUM_DAYS" => "30",
 		"YANDEX" => "N",
@@ -90,8 +90,6 @@ $APPLICATION->SetTitle("Новости");
 			"news" => "",
 			"section" => "",
 			"detail" => "#ELEMENT_ID#/",
-			"rss" => "rss/",
-			"rss_section" => "#SECTION_ID#/rss/",
 		)
 	),
 	false
