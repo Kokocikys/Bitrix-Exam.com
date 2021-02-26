@@ -1,10 +1,9 @@
 <?php
 
-namespace Local\Complaints\Lib\Controller;
+namespace Koko\Complaints\Controller;
 
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
-
 
 class Test extends Controller
 {
