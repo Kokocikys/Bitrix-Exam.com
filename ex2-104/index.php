@@ -1,15 +1,10 @@
-<?
-require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Ex2-104");
-?>
-<?php
-\Bitrix\Main\Loader::includeModule("koko.complaints");
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetTitle("Ex2-104"); ?>
 
-use \Koko\Complaints\ComplaintTable;
+<? $APPLICATION->IncludeComponent(
+    "custom:complaintsHandler",
+    ".default",
+    array()
+); ?>
 
-echo '<pre>';
-var_dump(ComplaintTable::getEntity()->compileDbTableStructureDump());
-echo '</pre>';
-
-?>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
