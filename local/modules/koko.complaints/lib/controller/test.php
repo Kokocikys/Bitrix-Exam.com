@@ -1,6 +1,6 @@
 <?php
 
-namespace Koko\Complaints\Controller;
+namespace Koko\Complaints\Lib\Controller;
 
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
@@ -10,17 +10,23 @@ class Test extends Controller
     public function configureActions()
     {
         return [
-            'example' => [
+            'add' => [
                 'prefilters' => [
                     new ActionFilter\Authentication(),
                     new ActionFilter\HttpMethod(array(ActionFilter\HttpMethod::METHOD_POST)),
                 ]
-            ]
+            ],
+            'count' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(array(ActionFilter\HttpMethod::METHOD_GET)),
+                ]
+            ],
         ];
     }
 
-    public static function addAction(array $arFields)
+    public static function addAction()
     {
+        //код...
         return [
             'ENTITY' => $arFields["ENTITY"],
             'ENTITY_ID' => $arFields["ENTITY_ID"],
@@ -30,7 +36,6 @@ class Test extends Controller
 
     public static function countAction()
     {
-        // тут считаем количество строк таблицы
         return $num = 0;
     }
 }
