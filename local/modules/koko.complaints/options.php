@@ -67,4 +67,3 @@ if ($MOD_RIGHT >= "R"):
     <? $tabControl->End(); ?>
 
 <? endif;//if($MOD_RIGHT>="R"): ?>
-

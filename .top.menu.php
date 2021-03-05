@@ -33,7 +33,7 @@ $aMenuLinks = Array(
 		"contacts/", 
 		Array(), 
 		Array(), 
-		"" 
+		""
 	)
 );
 ?>
