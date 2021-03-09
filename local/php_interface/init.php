@@ -1,27 +1,31 @@
 <?php
 
-AddEventHandler("main", "OnEpilog", array("Ex2", "Ex2_93"), 1);
+AddEventHandler("main", "OnBuildGlobalMenu", array("Ex2", "Ex2_95"));
 
 class Ex2
 {
-    function Ex2_93()
+    function Ex2_95(&$aGlobalMenu, &$aModuleMenu)
     {
-        if ((defined('ERROR_404') && ERROR_404 == 'Y')) {
+        global $USER;
+        $userGroups = CUser::GetUserGroupList($USER->GetID());
 
-            global $APPLICATION;
+        while ($group = $userGroups->Fetch()) {
+            if ($group["GROUP_ID"] == 6 && !$USER->IsAdmin()) {
+                unset($aGlobalMenu["global_menu_desktop"]);
+                unset($aGlobalMenu["global_menu_landing"]);
+                unset($aGlobalMenu["global_menu_marketing"]);
+                unset($aGlobalMenu["global_menu_store"]);
+                unset($aGlobalMenu["global_menu_services"]);
+                unset($aGlobalMenu["global_menu_statistics"]);
+                unset($aGlobalMenu["global_menu_marketplace"]);
+                unset($aGlobalMenu["global_menu_settings"]);
 
-            CEventLog::Add(array(
-                "SEVERITY" => "INFO",
-                "AUDIT_TYPE_ID" => "ERROR_404",
-                "MODULE_ID" => "main",
-                "DESCRIPTION" => $APPLICATION->GetCurPage(),
-            ));
-
-            $APPLICATION->RestartBuffer();
-
-            require $_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . "/header.php";
-            require $_SERVER["DOCUMENT_ROOT"] . "/404.php";
-            require $_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . "/footer.php";
+                foreach ($aModuleMenu as $key => $value) {
+                    if ($value["items_id"] != "menu_iblock_/news") {
+                        unset($aModuleMenu[$key]);
+                    }
+                }
+            }
         }
     }
 }
