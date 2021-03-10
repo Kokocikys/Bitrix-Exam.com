@@ -1,18 +1,15 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-if ($arParams["CANONICAL"] != "") {
+if ($arParams["CANONICAL"] == "Y") {
 
-    $arFilter = array("IBLOCK_ID" => $arParams["CANONICAL"], "ACTIVE" => "Y"); // По чему фильтруем
-    $arSelect = array("ID", "NAME"); // Что хотим получить
+    $arFilter = array("IBLOCK_ID" => $arParams["IBLOCK_ID_CANONICAL"], "VALUE" => $arParams["ELEMENT_ID"], "ACTIVE" => "Y"); // Ищем значение свойства элемента, которого соответствует ID новости
+    $arSelect = array("NAME"); // Что хотим получить
+    $element = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect); // Записываем первый элемент, значение ID привязанного элемента которого соответствует ID новости
+    $propsValues = $element->Fetch(); // Записываем массив значений свойств элемента
 
-    $listOfElements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect); // Возвращает список элементов по фильтру arFilter
-    while ($element = $listOfElements->GetNextElement()) { // циклом создаем переменную с элементом и проходим по каждому из них
-        $arFields = $element->GetFields(); // получаем все поля, которые хранятся в $element
-        $db_props = CIBlockElement::GetProperty($arParams["CANONICAL"], $arFields["ID"]); // Получаем значения свойства
-        $ar_props = $db_props->Fetch(); // Создаем массив из значений полей $element
-
-        if ($arParams["ELEMENT_ID"] == $ar_props["VALUE"]) { // Сравниваем, совпадают ли ID новости из инфоблока Новости и значение свойства элемента цикла инфоблока Canonical
-            $APPLICATION->SetPageProperty('CANONICAL', $arFields["NAME"]); // Задаем значение для CANONICAL
-        }
+    $cp = $this->__component;// объект компонента
+    if (is_object($cp)) {
+        $cp->arResult['CANONICAL_VALUE'] = $propsValues["NAME"]; // добавим в arResult компонента поле CANONICAL_VALUE
+        $cp->SetResultCacheKeys(array('CANONICAL_VALUE')); // сохраним их в копии arResult, с которой работает шаблон
     }
 }
