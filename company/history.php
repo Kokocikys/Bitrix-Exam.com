@@ -3,22 +3,6 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("История");
 ?>
 
-<?php
-
-$lastDate = time() - (4 * 24 * 60 * 60);
-
-$arFilter = array("DATE_REGISTER_1" => ConvertTimeStamp($lastDate, "FULL"));
-
-$rsUser = CUser::GetList(($by="ID"), ($order="desc"), $arFilter);
-
-while ($user = $rsUser->Fetch()) {
-    $arUsers[] = $user;
-}
-
-echo $lastDate = $arUsers[0]["DATE_REGISTER"];
-
-?>
-
 <table cellspacing="10">
   <tbody>
     <tr><td valign="top">1992г. 								</td> 								<td> 									<b>&laquo;Мебельная компания&raquo;</b> начиналась с изготовления мебели для школ и офисов. Первое 									производство мебели располагалось в арендуемой мастерской, площадью 400 м2 с одним 									деревообрабатывающим станком. В компании работало двадцать человек. Все заработанные 									средства вкладывались в развитие, что позволило молодой Компании расти быстрыми 									темпами. 								</td> 							</tr>
