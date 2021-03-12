@@ -55,6 +55,19 @@ class InterestNews extends CBitrixComponent
         global $USER;
 
         if ($USER->IsAuthorized()) {
+
+            CModule::IncludeModule("iblock");
+
+            $arButtons = CIBlock::GetPanelButtons($this->arParams["IBLOCK_ID"]);
+            $this->addIncludeAreaIcon(
+                array(
+                    "ID" => "IBlockInAdmin",
+                    "URL" => $arButtons["submenu"]["element_list"]["ACTION_URL"],
+                    "TITLE" => "ИБ в админке",
+                    "IN_PARAMS_MENU" => true,
+                )
+            );
+
             if ($this->startResultCache(false, $USER->GetID())) {
                 $this->authorsList();
                 $this->newsList();
