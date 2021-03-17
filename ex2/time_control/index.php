@@ -10,7 +10,13 @@ $APPLICATION->SetTitle("Оценка производительности");
  <br>
  _____Ex2-10<br>
  <br>
- Самая ресурсоемкая страница –&nbsp;&nbsp;<br>
- Нагрузка , среднее "Страница-Время" –&nbsp; с.<br>
- Проблемный компонент: .<br>
- Занимает&nbsp;<nobr>&nbsp;с и делает з</nobr>апросов:&nbsp;<br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+ Самая ресурсоемкая страница –&nbsp;&nbsp;<a href="http://bitrix-exam.com/bitrix/admin/perfmon_hit_list.php?lang=ru&set_filter=Y&find_script_name=%2Fproducts%2Findex.php">/products/index.php</a><br>
+ Нагрузка 23.29%, среднее "Страница-Время" –&nbsp;&nbsp;0.7676 с.<br>
+ Проблемный компонент:<br>
+ bitrix:catalog.section:&nbsp;<nobr>0.0857 с</nobr>;&nbsp;Запросов: 10 (0.0029 с).<br>
+ bitrix:catalog:&nbsp;<nobr>0.0902 с;&nbsp;</nobr>Запросов не совершает.<br>
+ + включаемая область /include/news.php:&nbsp;<nobr>0.0914 с.</nobr><br>
+ <nobr><br>
+ </nobr><br>
+ <br>
+ <br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
