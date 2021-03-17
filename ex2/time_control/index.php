@@ -16,7 +16,9 @@ $APPLICATION->SetTitle("Оценка производительности");
  bitrix:catalog.section:&nbsp;<nobr>0.0857 с</nobr>;&nbsp;Запросов: 10 (0.0029 с).<br>
  bitrix:catalog:&nbsp;<nobr>0.0902 с;&nbsp;</nobr>Запросов не совершает.<br>
  + включаемая область /include/news.php:&nbsp;<nobr>0.0914 с.</nobr><br>
- <nobr><br>
- </nobr><br>
  <br>
- <br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+ _____Ex2-88<br>
+ <br>
+ Самая ресурсоемкая страница –&nbsp;<a href="http://bitrix-exam.com/bitrix/admin/perfmon_hit_list.php?lang=ru&set_filter=Y&find_script_name=%2Fproducts%2Findex.php">/products/index.php</a><br>
+ Нагрузка 26.31%, среднее "Страница-Время" –&nbsp;0.7185&nbsp;с.<br>
+ Размер кэша в компоненте&nbsp;custom:simplecomp.exam: 10 КБ. После того, как убрал из занесения в кэш данные, размер кэша не изменился.<br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
