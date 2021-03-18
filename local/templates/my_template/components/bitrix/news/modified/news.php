@@ -56,7 +56,8 @@ $this->setFrameMode(true);
 	"bitrix:news.list",
 	"",
 	Array(
-		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
+        "SPECIAL_DATE" => $arParams["SPECIAL_DATE"],
+        "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
 		"IBLOCK_ID" => $arParams["IBLOCK_ID"],
 		"NEWS_COUNT" => $arParams["NEWS_COUNT"],
 		"SORT_BY1" => $arParams["SORT_BY1"],

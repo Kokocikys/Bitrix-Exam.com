@@ -18,6 +18,10 @@ $arTemplateParameters = array(
         "TYPE" => "CHECKBOX",
         "DEFAULT" => "N",
         "REFRESH" => "Y",
+    ), "SPECIAL_DATE" => array(
+        "NAME" => "SpecialDate",
+        "TYPE" => "CHECKBOX",
+        "DEFAULT" => "N",
     ),
 );
 
@@ -38,6 +42,11 @@ if ($arCurrentValues["CANONICAL"] == "Y") {
             "NAME" => "Инфоблок",
             "TYPE" => "LIST",
             "VALUES" => $arIBlock,
-        )
+        ),
+        "SPECIAL_DATE" => array(
+            "NAME" => "SpecialDate",
+            "TYPE" => "CHECKBOX",
+            "DEFAULT" => "N",
+        ),
     );
 }
