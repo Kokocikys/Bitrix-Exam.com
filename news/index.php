@@ -87,7 +87,8 @@ $APPLICATION->SetTitle("Новости");
 		"MESSAGE_404" => "",
 		"CANONICAL" => "Y",
 		"IBLOCK_TYPE_CANONICAL" => "news",
-		"IBLOCK_ID_CANONICAL" => "5",
+		"IBLOCK_ID_CANONICAL" => "1",
+		"SPECIAL_DATE" => "Y",
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
 			"section" => "",
