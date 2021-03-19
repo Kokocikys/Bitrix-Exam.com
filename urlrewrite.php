@@ -1,5 +1,13 @@
 <?php
 $arUrlRewrite=array (
+  3 => 
+  array (
+    'CONDITION' => '#^/ex2/complexcomp/#',
+    'RULE' => '',
+    'ID' => 'custom:complexcomp.exam',
+    'PATH' => '/ex2/complexcomp/index.php',
+    'SORT' => 100,
+  ),
   0 => 
   array (
     'CONDITION' => '#^/services/#',
