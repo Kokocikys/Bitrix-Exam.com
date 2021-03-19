@@ -7,7 +7,6 @@ IncludeTemplateLangFile(__FILE__);
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <? $APPLICATION->ShowHead(); ?>
-    <? $APPLICATION->ShowMeta("CANONICAL"); ?>
     <link href="<?= SITE_TEMPLATE_PATH ?>/common.css" type="text/css" rel="stylesheet"/>
     <link href="<?= SITE_TEMPLATE_PATH ?>/colors.css" type="text/css" rel="stylesheet"/>
 
