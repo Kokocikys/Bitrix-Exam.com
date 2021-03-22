@@ -21,16 +21,16 @@ $arComponentParameters = array(
             "VALUES" => $arIblock,
             "MULTIPLE" => "N",
         ),
-        "IBLOCK_ID_NEWS" => array(
+        "IBLOCK_ID_CLASSIFIER" => array(
             "PARENT" => "BASE",
-            "NAME" => GetMessage("IBLOCK_NEWS"),
+            "NAME" => GetMessage("IBLOCK_CLASSIFIER"),
             "TYPE" => "LIST",
             "VALUES" => $arIblock,
             "MULTIPLE" => "N",
         ),
-        "USER_SECTION_PROP_CODE" => array(
+        "USER_CODE" => array(
             "PARENT" => "BASE",
-            "NAME" => GetMessage("USER_SECTION_PROP_CODE"),
+            "NAME" => GetMessage("USER_CODE"),
             "TYPE" => "STRING",
         ),
         "CACHE_TIME" => array(

@@ -8,7 +8,7 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Простой компонент", 
+		"Новости по интересам", 
 		"/ex2/simplecomp/", 
 		Array(), 
 		Array(), 

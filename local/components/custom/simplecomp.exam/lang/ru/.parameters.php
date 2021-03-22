@@ -1,4 +1,4 @@
 <?php
-$MESS["IBLOCK_CATALOG"] = "Инфоблок каталога";
-$MESS["IBLOCK_NEWS"] = "Инфоблок новостей";
-$MESS["USER_SECTION_PROP_CODE"] = "Код свойства раздела каталога, хранящий привязку к новостям";
+$MESS["IBLOCK_CATALOG"] = "Инфоблок каталога продукции";
+$MESS["IBLOCK_CLASSIFIER"] = "Инфоблок классификатора";
+$MESS["USER_CODE"] = "Код свойства 'Фирма'";
