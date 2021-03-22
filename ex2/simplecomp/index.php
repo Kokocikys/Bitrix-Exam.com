@@ -17,7 +17,7 @@ $APPLICATION->SetTitle("Новости по интересам");
 		"USER_SECTION_PROP_CODE" => "UF_NEWS_LINK",
 		"FIRM" => "FIRM",
 		"IBLOCK_ID_CLASS" => "6",
-		"IBLOCK_ID_CLASSIFIER" => "6",
+		"IBLOCK_ID_CLASSIFIER" => "5",
 		"USER_CODE" => "FIRM"
 	),
 	false
