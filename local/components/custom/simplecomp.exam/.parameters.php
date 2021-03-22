@@ -33,6 +33,12 @@ $arComponentParameters = array(
             "NAME" => GetMessage("USER_CODE"),
             "TYPE" => "STRING",
         ),
+        "DETAIL_VIEW" => array(
+            "PARENT" => "BASE",
+            "NAME" => GetMessage("DETAIL_VIEW"),
+            "TYPE" => "STRING",
+            "DEFAULT" => "#SITE_DIR#/products/#SECTION_ID#/#ELEMENT_ID#",
+        ),
         "ELEMENTS_ON_PAGE" => array(
             "PARENT" => "BASE",
             "NAME" => GetMessage("ELEMENTS_ON_PAGE"),

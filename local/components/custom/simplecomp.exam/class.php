@@ -37,6 +37,10 @@ class TestComponent extends CBitrixComponent
 
     public function getProducts()
     {
+        $arOrder = array(
+            "NAME" => "ASC",
+            "SORT" => "ASC",
+        );
         $arFilter = array(
             'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"],
             "ACTIVE" => "Y"
@@ -50,7 +54,7 @@ class TestComponent extends CBitrixComponent
             "PROPERTY_" . $this->arParams["USER_CODE"],
         );
         $products = CIBlockElement::GetList(
-            array(),
+            $arOrder,
             $arFilter,
             false,
             false,
@@ -61,6 +65,20 @@ class TestComponent extends CBitrixComponent
             $firmID = $product["PROPERTY_" . $this->arParams["USER_CODE"] . "_VALUE"];
 
             $this->arResult["PRODUCTS_COPY"][$product["ID"]] = $product;
+
+            $product["DETAIL_PAGE_URL"] = str_replace(
+                array(
+                    "#SITE_DOMAIN#",
+                    "#SECTION_ID#",
+                    "#ELEMENT_ID#",
+                ),
+                array(
+                    SITE_SERVER_NAME,
+                    $product["IBLOCK_SECTION_ID"],
+                    $product["ID"],
+                ),
+                $this->arParams["DETAIL_VIEW"]
+            );
 
             if (array_key_exists($firmID, $this->arResult["PRODUCTS"])) {
                 array_push($this->arResult["PRODUCTS"][$firmID], $product);

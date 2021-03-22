@@ -19,7 +19,8 @@ $APPLICATION->SetTitle("Новости по интересам");
 		"IBLOCK_ID_CLASS" => "6",
 		"IBLOCK_ID_CLASSIFIER" => "5",
 		"USER_CODE" => "FIRM",
-		"ELEMENTS_ON_PAGE" => "2"
+		"ELEMENTS_ON_PAGE" => "2",
+		"DETAIL_VIEW" => "#SITE_DOMAIN#/products/#SECTION_ID#/#ELEMENT_ID#/"
 	),
 	false
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
