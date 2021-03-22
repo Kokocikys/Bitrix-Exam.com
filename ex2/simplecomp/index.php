@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("Новости по интересам");
 	"custom:simplecomp.exam", 
 	".default", 
 	array(
-		"CACHE_TIME" => "36000000",
+		"CACHE_TIME" => "3600000",
 		"CACHE_TYPE" => "A",
 		"COMPONENT_TEMPLATE" => ".default",
 		"IBLOCK_ID" => "1",
@@ -18,7 +18,8 @@ $APPLICATION->SetTitle("Новости по интересам");
 		"FIRM" => "FIRM",
 		"IBLOCK_ID_CLASS" => "6",
 		"IBLOCK_ID_CLASSIFIER" => "5",
-		"USER_CODE" => "FIRM"
+		"USER_CODE" => "FIRM",
+		"ELEMENTS_ON_PAGE" => "2"
 	),
 	false
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

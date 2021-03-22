@@ -5,23 +5,58 @@ class TestComponent extends CBitrixComponent
 {
     public function getFirm()
     {
-        $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CLASSIFIER"], "ACTIVE" => "Y", "CHECK_PERMISSIONS" => "Y");
-        $arSelect = array("ID", "NAME");
-        $elements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+        $arFilter = array(
+            'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CLASSIFIER"],
+            "ACTIVE" => "Y",
+        );
+        $arSelect = array(
+            "ID",
+            "NAME",
+        );
+        $arNavParams = array(
+            "nPageSize" => $this->arParams['ELEMENTS_ON_PAGE'],
+            'bShowAll' => true,
+        );
+
+        $elements = CIBlockElement::GetList(
+            array(),
+            $arFilter,
+            false,
+            $arNavParams,
+            $arSelect
+        );
+
+        $this->arResult['NAVY'] = $elements->GetPageNavString("Элементы", "modern", "Y");
 
         while ($firm = $elements->Fetch()) {
             $this->arResult["FIRM"][$firm["ID"]] = $firm["NAME"];
         }
 
         $this->arResult["COUNTER"] = $elements->SelectedRowsCount();
-        $this->SetResultCacheKeys(array("COUNTER"));
+        $this->SetResultCacheKeys(array("COUNTER","NAVY"));
     }
 
     public function getProducts()
     {
-        $arFilter = array('IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"], "ACTIVE" => "Y", "CHECK_PERMISSIONS" => "Y");
-        $arSelect = array("ID", "NAME", "PROPERTY_" . $this->arParams["USER_CODE"], "PROPERTY_PRICE", "PROPERTY_MATERIAL", "DETAIL_PAGE_URL");
-        $products = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+        $arFilter = array(
+            'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"],
+            "ACTIVE" => "Y"
+        );
+        $arSelect = array(
+            "ID",
+            "NAME",
+            "DETAIL_PAGE_URL",
+            "PROPERTY_PRICE",
+            "PROPERTY_MATERIAL",
+            "PROPERTY_" . $this->arParams["USER_CODE"],
+        );
+        $products = CIBlockElement::GetList(
+            array(),
+            $arFilter,
+            false,
+            false,
+            $arSelect
+        );
 
         while ($product = $products->Fetch()) {
             $firmID = $product["PROPERTY_" . $this->arParams["USER_CODE"] . "_VALUE"];
@@ -33,14 +68,23 @@ class TestComponent extends CBitrixComponent
         }
     }
 
+    public function timeTag()
+    {
+        $this->arResult["TIME"] = time();
+        $this->SetResultCacheKeys(array("TIME"));
+    }
+
     public function executeComponent()
     {
         global $USER;
         global $APPLICATION;
 
-        $groups = $USER->GetGroups();
+        CModule::IncludeModule('iblock');
 
-        if ($this->startResultCache(false, $groups)) {
+        $arNavigation = CDBResult::GetNavParams($arNavParams);
+
+        if ($this->startResultCache(false, array($USER->GetGroups(), $arNavigation))) {
+            $this->timeTag();
             $this->getFirm();
             $this->getProducts();
             $this->IncludeComponentTemplate();

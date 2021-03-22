@@ -2,7 +2,7 @@
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
 
 <div>
-    Метка времени: <?= time()?>
+    Метка времени: <?= $arResult["TIME"] ?>
     <ul>
         <? foreach ($arResult["FIRM"] as $firmID => $firmName) { ?>
             <li><?= $firmName ?></li>
@@ -15,4 +15,5 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
             </ul>
         <? } ?>
     </ul>
+    <?= $arResult['NAVY'] ?>
 </div>

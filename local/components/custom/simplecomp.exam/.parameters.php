@@ -33,6 +33,12 @@ $arComponentParameters = array(
             "NAME" => GetMessage("USER_CODE"),
             "TYPE" => "STRING",
         ),
+        "ELEMENTS_ON_PAGE" => array(
+            "PARENT" => "BASE",
+            "NAME" => GetMessage("ELEMENTS_ON_PAGE"),
+            "TYPE" => "STRING",
+            "DEFAULT" => 2,
+        ),
         "CACHE_TIME" => array(
             "DEFAULT" => 36000000,
         ),
