@@ -17,7 +17,6 @@ class TestComponent extends CBitrixComponent
             "nPageSize" => $this->arParams['ELEMENTS_ON_PAGE'],
             'bShowAll' => true,
         );
-
         $elements = CIBlockElement::GetList(
             array(),
             $arFilter,
@@ -33,7 +32,7 @@ class TestComponent extends CBitrixComponent
         }
 
         $this->arResult["COUNTER"] = $elements->SelectedRowsCount();
-        $this->SetResultCacheKeys(array("COUNTER","NAVY"));
+        $this->SetResultCacheKeys(array("COUNTER", "NAVY"));
     }
 
     public function getProducts()
@@ -60,6 +59,9 @@ class TestComponent extends CBitrixComponent
 
         while ($product = $products->Fetch()) {
             $firmID = $product["PROPERTY_" . $this->arParams["USER_CODE"] . "_VALUE"];
+
+            $this->arResult["PRODUCTS_COPY"][$product["ID"]] = $product;
+
             if (array_key_exists($firmID, $this->arResult["PRODUCTS"])) {
                 array_push($this->arResult["PRODUCTS"][$firmID], $product);
             } else {
