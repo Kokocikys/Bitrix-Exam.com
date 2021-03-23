@@ -2,7 +2,8 @@
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
 
 <div>
-    Метка времени: <?= $arResult["TIME"] ?>
+    Метка времени: <?= $arResult["TIME"] ?><br>
+    <a href="<?= $APPLICATION->GetCurPage() . "?F=Y" ?>">Применить фильтр</a>
     <ul>
         <? foreach ($arResult["FIRM"] as $firmID => $firmName) { ?>
             <li><?= $firmName ?></li>

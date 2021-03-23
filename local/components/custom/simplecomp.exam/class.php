@@ -41,10 +41,24 @@ class TestComponent extends CBitrixComponent
             "NAME" => "ASC",
             "SORT" => "ASC",
         );
-        $arFilter = array(
-            'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"],
-            "ACTIVE" => "Y"
-        );
+
+        if ($_REQUEST["F"]) {
+            $arFilter = array(
+                'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"],
+                "ACTIVE" => "Y",
+                array(
+                    "LOGIC" => "OR",
+                    array("<=PROPERTY_PRICE" => 1700, "=PROPERTY_MATERIAL" => "Дерево, ткань"),
+                    array("<PROPERTY_PRICE" => 1500, "=PROPERTY_MATERIAL" => "Металл, пластик"),
+                ),
+            );
+        } else {
+            $arFilter = array(
+                'IBLOCK_ID' => $this->arParams["IBLOCK_ID_CATALOG"],
+                "ACTIVE" => "Y"
+            );
+        }
+
         $arSelect = array(
             "ID",
             "NAME",
@@ -53,6 +67,7 @@ class TestComponent extends CBitrixComponent
             "PROPERTY_MATERIAL",
             "PROPERTY_" . $this->arParams["USER_CODE"],
         );
+
         $products = CIBlockElement::GetList(
             $arOrder,
             $arFilter,
@@ -62,7 +77,6 @@ class TestComponent extends CBitrixComponent
         );
 
         while ($product = $products->Fetch()) {
-            $firmID = $product["PROPERTY_" . $this->arParams["USER_CODE"] . "_VALUE"];
 
             $this->arResult["PRODUCTS_COPY"][$product["ID"]] = $product;
 
@@ -79,6 +93,8 @@ class TestComponent extends CBitrixComponent
                 ),
                 $this->arParams["DETAIL_VIEW"]
             );
+
+            $firmID = $product["PROPERTY_" . $this->arParams["USER_CODE"] . "_VALUE"];
 
             if (array_key_exists($firmID, $this->arResult["PRODUCTS"])) {
                 array_push($this->arResult["PRODUCTS"][$firmID], $product);
@@ -103,7 +119,12 @@ class TestComponent extends CBitrixComponent
 
         $arNavigation = CDBResult::GetNavParams($arNavParams);
 
+        if ($_REQUEST["F"]) $this->ClearResultCache(array($USER->GetGroups(), $arNavigation));
+
         if ($this->startResultCache(false, array($USER->GetGroups(), $arNavigation))) {
+
+            if ($_REQUEST["F"]) $this->AbortResultCache();
+
             $this->timeTag();
             $this->getFirm();
             $this->getProducts();
